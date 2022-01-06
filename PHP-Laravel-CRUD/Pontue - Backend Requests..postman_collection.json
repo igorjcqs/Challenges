@@ -1,0 +1,845 @@
+{
+	"info": {
+		"_postman_id": "ce2436cf-27bf-48ac-992b-62db3f9a1f53",
+		"name": "Pontue - Backend Requests.",
+		"description": "Lista de requisições presentes na API.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{{Nome do Usuário}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{Email do Usuário}}",
+									"description": "(É necessário seguir o formato de um email)",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{Senha do Usuário}}",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "{{Senha do Usuário}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/api/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						},
+						"description": "Requisição utilizada para registrar/inserir um usuário no banco de dados."
+					},
+					"response": []
+				},
+				{
+					"name": "Log-in Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "{{Email do Usuário}}",
+									"description": "(É necessário seguir o formato de um email)",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{Senha do Usuário}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/api/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						},
+						"description": "Requisição utilizada para realizar log-in."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Access Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/api/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"logout"
+							]
+						},
+						"description": "Requisição utilizada para realizar logout através de um token inserido previadamente."
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Access Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "old_password",
+									"value": "{{Senha do Usuário}}",
+									"type": "text"
+								},
+								{
+									"key": "new_password",
+									"value": "{{Nova senha do usuário.}}",
+									"type": "text"
+								},
+								{
+									"key": "confirm_new_password",
+									"value": "{{Nova senha do usuário.}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/api/changepassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"changepassword"
+							]
+						},
+						"description": "Requisição utilizada para trocar a senha do usuário utilizando um token previamente informado e a senha atual do mesmo."
+					},
+					"response": []
+				},
+				{
+					"name": "Send Email To Verify Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "{{Email do Usuário}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/api/verifyemail",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"verifyemail"
+							]
+						},
+						"description": "Requisição utilizada para enviar o email de verificação ao usuário previamente cadastrado no banco de dados."
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Email Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Access Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/api/verifyemail/{{Email do Usuário}}/{{Código de verificação enviado por email.}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"verifyemail",
+								"{{Email do Usuário}}",
+								"{{Código de verificação enviado por email.}}"
+							]
+						},
+						"description": "Requisição utilizada para verificar o email do usuário. Esta requisição, é automaticamente enviada por email após a \"Send Email To Verify Request\", onde as variáveis ${email} e ${token} são substituidas."
+					},
+					"response": []
+				},
+				{
+					"name": "Send Email To Reset Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Access Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/api/resetpassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"resetpassword"
+							]
+						},
+						"description": "Requisição utilizada para enviar ao usuário o email com o link para resetar a senha."
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Access Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/api/resetpassword/{{Email do Usuário}}/{{Código de verificação enviado por email.}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"resetpassword",
+								"{{Email do Usuário}}",
+								"{{Código de verificação enviado por email.}}"
+							]
+						},
+						"description": "Requisição utilizada para resetar a senha do usuário. Esta requisição, é automaticamente enviada por email após a \"Send Email To Reset Password Request\", onde as variáveis ${email} e ${token} são substituidas."
+					},
+					"response": []
+				}
+			],
+			"description": "Requisições utilizadas para realizar registro, log-in, log-out, mudar senha, verificação de e-mail e recuperação de senha."
+		},
+		{
+			"name": "CRUD - Products",
+			"item": [
+				{
+					"name": "CRUD - Products - Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Access Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "{{Título do produto.}}",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "{{Descrição do produto.}}",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "{{Preço do produto.}}",
+									"type": "text"
+								},
+								{
+									"key": "sold",
+									"value": "{{Quantidade vendida do produto.}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/api/products/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"products",
+								"create"
+							]
+						},
+						"description": "Requisição utilizada para inserir um produto no banco de dados."
+					},
+					"response": []
+				},
+				{
+					"name": "CRUD - Products - Read",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/api/products/read",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"products",
+								"read"
+							]
+						},
+						"description": "Requisição utilizada para ler/exibir todos os produtos presentes no banco de dados."
+					},
+					"response": []
+				},
+				{
+					"name": "CRUD - Products - Read Specific ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/api/products/read/${id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"products",
+								"read",
+								"${id}"
+							]
+						},
+						"description": "Requisição utilizada para exibir um produto específico (${id})."
+					},
+					"response": []
+				},
+				{
+					"name": "CRUD - Products - Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Access Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost/api/products/update/{id}?{{Item a ser atualizado}}={{Valor que irá substituir}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"products",
+								"update",
+								"{id}"
+							],
+							"query": [
+								{
+									"key": "{{Item a ser atualizado}}",
+									"value": "{{Valor que irá substituir}}"
+								}
+							]
+						},
+						"description": "Requisição utilizada para atualizar um item de um determinado produto({id}) no banco de dados."
+					},
+					"response": []
+				},
+				{
+					"name": "CRUD - Products - Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Access Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost/api/products/delete/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"products",
+								"delete",
+								"{id}"
+							]
+						},
+						"description": "Requisição utilizada para deletar um produto específico."
+					},
+					"response": []
+				}
+			],
+			"description": "Requisições utilizada para criar, ler, ler um item específico, atualizar e deletar um produto."
+		},
+		{
+			"name": "CRUD - Cars",
+			"item": [
+				{
+					"name": "CRUD - Cars - Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Access Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "{{Título do carro.}}",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "{{Descrição do carro.}}",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "{{Preço do carro.}}",
+									"type": "text"
+								},
+								{
+									"key": "color",
+									"value": "{{Cor do carro.}}",
+									"type": "text"
+								},
+								{
+									"key": "year",
+									"value": "{{Ano do carro.}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/api/cars/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"cars",
+								"create"
+							]
+						},
+						"description": "Requisição utilizada para inserir um produto no banco de dados."
+					},
+					"response": []
+				},
+				{
+					"name": "CRUD - Cars - Read",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/api/cars/read",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"cars",
+								"read"
+							]
+						},
+						"description": "Requisição utilizada para ler/exibir todos os produtos presentes no banco de dados."
+					},
+					"response": []
+				},
+				{
+					"name": "CRUD - Cars - Read Specific ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/api/cars/read/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"cars",
+								"read",
+								"{id}"
+							]
+						},
+						"description": "Requisição utilizada para exibir um produto específico (${id})."
+					},
+					"response": []
+				},
+				{
+					"name": "CRUD - Cars - Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Access Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost/api/cars/update/{id}?{{Item a ser atualizado}}={{Valor que irá substituir}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"cars",
+								"update",
+								"{id}"
+							],
+							"query": [
+								{
+									"key": "{{Item a ser atualizado}}",
+									"value": "{{Valor que irá substituir}}"
+								}
+							]
+						},
+						"description": "Requisição utilizada para atualizar um item de um determinado produto({id}) no banco de dados."
+					},
+					"response": []
+				},
+				{
+					"name": "CRUD - Cars - Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Access Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost/api/cars/delete/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"cars",
+								"delete",
+								"{id}"
+							]
+						},
+						"description": "Requisição utilizada para deletar um produto específico."
+					},
+					"response": []
+				}
+			],
+			"description": "Requisições utilizada para criar, ler, ler um item específico, atualizar e deletar um carro."
+		}
+	],
+	"variable": [
+		{
+			"key": "Email do Usuário",
+			"value": "email_do_usuário@gmail.com"
+		},
+		{
+			"key": "Senha do Usuário",
+			"value": "senha_do_usuário"
+		},
+		{
+			"key": "Nome do Usuário",
+			"value": "Nome do Usuário"
+		},
+		{
+			"key": "Access Token",
+			"value": "token"
+		},
+		{
+			"key": "Nova senha do usuário.",
+			"value": "Nova senha do usuário."
+		},
+		{
+			"key": "Código de verificação enviado por email.",
+			"value": "${code}"
+		},
+		{
+			"key": "Título do produto.",
+			"value": "Título do produto."
+		},
+		{
+			"key": "Descrição do produto.",
+			"value": "Descrição do produto."
+		},
+		{
+			"key": "Preço do produto.",
+			"value": "Preço do produto."
+		},
+		{
+			"key": "Quantidade vendida do produto.",
+			"value": "Quantidade vendida do produto."
+		},
+		{
+			"key": "Item a ser atualizado",
+			"value": "Item a ser atualizado"
+		},
+		{
+			"key": "Valor que irá substituir",
+			"value": "Valor que irá substituir"
+		},
+		{
+			"key": "Título do carro.",
+			"value": "Título do carro."
+		},
+		{
+			"key": "Descrição do carro.",
+			"value": "Descrição do carro."
+		},
+		{
+			"key": "Preço do carro.",
+			"value": "Preço do carro."
+		},
+		{
+			"key": "Cor do carro.",
+			"value": "Cor do carro."
+		},
+		{
+			"key": "Ano do carro.",
+			"value": "Ano do carro."
+		}
+	]
+}
