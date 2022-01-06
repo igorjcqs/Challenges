@@ -1,3 +1,7 @@
-﻿<div align="center">
-  <h1 font-size="150px">Challenges</h1>
+<div align="center">
+  <h1>Challenges Head</h1>
 </div>
+This repository is fully dedicated to all the challenges of work I've done. 
+
+Projects:
+- a[https://github.com/igorjcqs/Challenges/tree/Spring-Boot-CRUD]
