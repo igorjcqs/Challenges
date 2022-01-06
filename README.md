@@ -1,3 +1,3 @@
 ﻿<div align="center">
-  <img src="https://www.meioemensagem.com.br/wp-content/uploads/2016/04/challenges-ahead-900-x-500-900x407.png" style="width: 25%;">
+  <img src="https://plannedgiving.com/wp-content/uploads/iStock-641245758-1.jpg" style="width: 25%;">
 </div>
