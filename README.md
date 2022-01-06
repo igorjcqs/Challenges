@@ -1,26 +1,23 @@
-## Sobre o desafio
+## About the challenge
 
-O desafio é construir uma API simples em Laravel (PHP) que permite Criar, Ler, Atualizar e Deletar 2 entidades diferentes à sua escolha, ou seja, cria um lista de filmes, carros, games, etc.
+The challenge is to build a simple API in Laravel (PHP) that allows you to Create, Read, Update and Delete 2 different entities of your choice, that is, it creates a list of movies, cars, games, etc.
 
-Desafio bônus (opcional): Fazer com que a API funcione apenas para usuário logados (autenticados).
+Bonus challenge (optional): Make the API work only for logged in (authenticated) users.
 
-## Objetivos:
-- Ter um ending point para cada operação (CRUD); - Concluído ✔️
-- Utilizar um banco de dados para armazenar os dados; - Concluído ✔️
-- Exibir dados retornados de forma organizada; - Concluído ✔️
-- Ter um README para explicar como rodar o projeto; - Concluído ✔️
-- Construir coleção do POSTMAN para testes; - Concluído ✔️
-- Funcionalidades de resetar senha e trocar senha; - Concluído ✔️
-- Fazer testes automatizados utilizando PHPUnit; - Parcialmente concluído ❓
-- Utilizar Docker para rodar o sistema; - Concluído ✔️
+## Goals:
+- Have an ending point for each operation (CRUD); - Concluded ✔️
+- Use a database to store data; - Concluded ✔️
+- Display returned data in an organized way; - Concluded ✔️
+- Have a README to explain how to run the project; - Concluded ✔️
+- Build POSTMAN collection for testing; - Concluded ✔️
+- Password reset and password change functionality; - Concluded ✔️
+- Use Docker to run the system; - Concluído ✔️
 
-Objetivos concluídos: todos.
+## About development
 
-## Sobre o desenvolvimento
+API developed in a Docker environment, through a development environment created by the Laravel community called [Laradock](https://github.com/laradock/laradock) and tested through Postman, which is a client API that allows testing HTTP requests and HTTPs.
 
-Api desenvolvida em um ambiente Docker, através de um ambiente de desenvolvimento criado pela comunidade Laravel chamado [Laradock](https://github.com/laradock/laradock) e testada através do Postman, que é um API client que permite testar requisições HTTP e HTTPs.
-
-#### Tecnologias, softwares e ferramentas utilizadas:
+#### Technologies, software and tools used:
 - [PHP 8.0](https://www.php.net/releases/8.0/en.php)
 - [Laravel 8.0](https://laravel.com/docs/8.x/releases)
 - [Nginx](https://www.nginx.com/)
@@ -29,47 +26,45 @@ Api desenvolvida em um ambiente Docker, através de um ambiente de desenvolvimen
 - [Docker](https://www.docker.com/)
 - [Postman](https://www.postman.com/)
 
-## Como testar a api?
+## How to test the api?
 
-- 1 - Clone o repositório para um local de sua escolha, através do comando:
-```git clone https://github.com/igorjcqs/pontue-challenge```
+- 1 - Clone the repository to a location of your choice, using the command:
+```git clone --b PHP-Laravel-CRUD https://github.com/igorjcqs/Challenges.git```
 
-- 2 - Clone o repositório do laradock para dentro do projeto, através do comando:
+- 2 - Clone the laradock repository into the project using the command:
 ```git clone https://github.com/laradock/laradock```
 
-- 3 - Instale as dependências do composer, através do comando:
+- 3 - Install composer dependencies, using the command:
 ```composer install```
 
-- 4 - Acesse o ambiente docker;
+- 4 - Access the docker environment;
 ```cd laradock```
 
-- 5 - Abra o arquivo ```laradock/.env.example``` e copie o conteúdo para seu arquivo ```laradock/.env``` (Caso não tenha, crie);
+- 5 - Open the ```laradock/.env.example``` file and copy the contents to your ```laradock/.env``` file (If not, create it);
 
-- 6 - Configure todas as portas que você irá usar.
+- 6 - Configure all the ports you will use.
 
-- 7 - Configure o seu banco de dados.
+- 7 - Configure your database.
 
-- 8 - Volte ao diretório principal.
+- 8 - Return to main directory.
 
-- 9 - Abra o arquivo ```.env.example``` e copie o conteúdo para seu arquivo ```.env```  (Caso não tenha, crie);
+- 9 - Open the ```.env.example``` file and copy the contents to your ```.env``` file (If not, create it);
 
-- 10 - Abra o seu arquivo ```.env``` e configure o banco de dados e o servidor de e-mail.
+- 10 - Open your ```.env``` file and configure your database and mail server.
 
-- 11 - Inicie o ambiente docker, através do comando:
+- 11 - Start the docker environment using the command:
 ```docker-compose up -d nginx mysql phpmyadmin```
 
-- 12 - Realize as migrações do banco de dados, através do comando:
+- 12 - Perform database migrations using the command:
 ```php artisan migrate```
 
-- 13 - Rode todas as seeds do banco de dados, através do comando:
+- 13 - Run all database seeds using the command:
 ```php artisan db:seed```
 
-- 14 - Pronto! O projeto já está rodando em um ambiente docker e você poderá acessar pelo link: https://localhost:PORTA_CONFIGURADA_NO_ENV
+- 14 - Ready! The project is already running in a docker environment and you can access it through the link: https://localhost:PORTA_CONFIGURADA_NO_ENV
 
-- 15 - Baixe o Postman e importe a coleção (Pontue - Backend Requests..postman_collection.json) de requests presentes no projeto.
+- 15 - Download Postman and import the collection (Score - Backend Requests..postman_collection.json) of requests present in the project.
 
-OBS¹: Para rodar corretamente é necessário ter o [Docker Desktop](https://www.docker.com/get-started) instalado no computador.
+OBS¹: To run correctly you need to have [Docker Desktop](https://www.docker.com/get-started) installed on your computer.
 
-OBS²: Caso queira, você pode optar por trocar as tecnologias utilizadas.
-
-OBS³: A primeira vez que você rodar o comando "docker-compose", provavelmente irá levar um tempo, pois irá baixar todas as depedências necessárias.
+OBS²: The first time you run the "docker-compose" command it will probably take a while as it will download all necessary dependencies.
