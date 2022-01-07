@@ -4,14 +4,16 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon source/index.js"
+    "start": "nodemon source/app.js"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.1",
     "consolidate": "^0.16.0",
     "dotenv": "^10.0.0",
-    "ejs": "^3.1.6",
     "express": "^4.17.2",
+    "joi": "^17.5.0",
+    "mongoose": "^6.1.5",
     "mustache": "^4.2.0",
     "nodemon": "^2.0.15"
   }
