@@ -25,12 +25,12 @@
         <div class="col-md-6 mb-1">
           <img src="assets/svg.svg" class="img-fluid" alt="image" />
         </div>
-        <div class="col-md-5 mt-4">
+        <div class="col-md-5 mt-2">
           <div class="titletext text-center">
             <h2 class="title mb-3">Register</h2>
           </div>
-          <div class="errortext text-center">
-            <p class="errorMessage mb-3">Error</p>
+          <div class="errortext text-center" id="errorMessageDiv">
+            <p class="errorMessage mb-2" id="errorMessageText">a</p>
           </div>
           <form>
             <div class="form-group mb-3">
@@ -49,14 +49,6 @@
               <label for="password">Password</label>
               <input type="password" name="password" class="form-control" />
             </div>
-            <div class="form-group mb-3">
-              <label for="confirmPassword">Confirm password</label>
-              <input
-                type="password"
-                name="confirmPassword"
-                class="form-control"
-              />
-            </div>
             <div class="button text-center">
               <button class="btn btn-class">Register</button>
             </div>
@@ -67,15 +59,29 @@
     <script>
       const form = document.querySelector("form");
 
-      form.addEventListener("submit", (e) => {
+      form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const fname = form.firstName.value;
-        const lname = form.lastName.value;
+        const firstName = form.firstName.value;
+        const lastName = form.lastName.value;
         const email = form.email.value;
-        const passw = form.password.value;
+        const password = form.password.value;
 
-        console.log(fname, lname, email, passw);
+        try {
+          const res = await fetch("/signup", {
+            method: "POST",
+            body: JSON.stringify({ firstName, lastName, email, password }),
+            headers: { "Content-Type": "application/json" },
+          });
+          const data = await res.json();
+          console.log(data);
+          document.getElementById("errorMessageDiv").style.display = "block";
+          document.getElementById("errorMessageText").textContent = data.error;
+        } catch (error) {
+          console.log(error);
+        }
+
+        location.assign("/");
       });
     </script>
     <script

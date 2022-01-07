@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 
 module.exports.signupGet = (req, res) => {
@@ -26,12 +27,22 @@ const signupValidationSchema = Joi.object({
   password: Joi.string().required().min(8).max(255),
 });
 
-module.exports.signupPost = async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+const maxAge = 3 * 24 * 60 * 60;
+const createToken = (id) => {
+  return jwt.sign({ id }, "Martins Websites", {
+    expiresIn: maxAge,
+  });
+};
 
+module.exports.signupPost = async (req, res) => {
   const { error } = signupValidationSchema.validate(req.body);
   if (error) {
-    const errorMessage = error.details[0].message.replace(/[^\w\s]/gi, "");
+    const errorMessage = error.details[0].message
+      .replace(/[^\w\s]/gi, "")
+      .replace("firstName", "First name")
+      .replace("lastName", "Last name")
+      .replace("email", "Email")
+      .replace("password", "Password");
     return res.status(400).json({ error: errorMessage });
   }
 
@@ -48,7 +59,9 @@ module.exports.signupPost = async (req, res) => {
 
   try {
     const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
+    const token = createToken(savedUser._id);
+    res.cookie("jwt", token, { HttpOnly: true, maxAge: maxAge * 1000 });
+    res.status(201).json({ user: savedUser._id });
   } catch (err) {
     res.status(400).json({ error });
   }
