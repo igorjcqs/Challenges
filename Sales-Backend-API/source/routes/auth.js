@@ -5,6 +5,7 @@ router.get("/signup", authController.signupGet);
 router.post("/signup", authController.signupPost);
 router.get("/login", authController.loginGet);
 router.post("/login", authController.loginPost);
-router.post("/logout", authController.logoutGet);
+router.get("/logout", authController.logoutGet);
+router.get("/deleteaccount", authController.deleteAccountGet);
 
 module.exports = router;

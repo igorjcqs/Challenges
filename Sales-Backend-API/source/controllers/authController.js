@@ -92,4 +92,25 @@ module.exports.loginPost = async (req, res) => {
 module.exports.logoutGet = (req, res) => {
   res.cookie("jwt", "", { maxAge: 1 });
   res.redirect("/");
+  res.status(200).json({ message: "User logged out." });
+};
+
+module.exports.deleteAccountGet = (req, res) => {
+  const token = req.cookies.jwt;
+
+  if (token) {
+    jwt.verify(token, "Martins Websites", async (err, decodedToken) => {
+      if (err) {
+        res.redirect("/login");
+      } else {
+        const user = await User.deleteOne({ _id: JSON.parse(decodedToken.id) });
+
+        res.cookie("jwt", "", { maxAge: 1 });
+        res.redirect("/");
+        res.status(200).json({ message: "Account deleted!" });
+      }
+    });
+  } else {
+    res.redirect("/login");
+  }
 };

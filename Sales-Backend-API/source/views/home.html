@@ -46,7 +46,7 @@
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/dashboard" id="dashLink"
+                <a class="nav-link" href="/dashboard/user" id="dashLink"
                   >Dashboard</a
                 >
               </li>
@@ -95,6 +95,7 @@
 
         if (cookie) {
           document.getElementById("authBtn").innerHTML = "Logout";
+          document.getElementById("authBtnHref").href = "/logout";
         } else {
           document.getElementById("authBtn").innerHTML = "Sign in";
           document.getElementById("authBtnHref").href = "/login";
