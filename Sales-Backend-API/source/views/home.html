@@ -17,9 +17,9 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="/styles/home.css" />
-    <title>Home Page</title>
+    <title>Home</title>
   </head>
-  <body>
+  <body onload="prepare()">
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -46,7 +46,9 @@
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Dashboard</a>
+                <a class="nav-link" href="/dashboard" id="dashLink"
+                  >Dashboard</a
+                >
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Products</a>
@@ -57,7 +59,9 @@
             </ul>
 
             <ul class="navbar-nav ms-auto">
-              <button class="btn">Sign up</button>
+              <a href="#" id="authBtnHref">
+                <button class="btn" id="authBtn"></button>
+              </a>
             </ul>
           </div>
         </div>
@@ -70,6 +74,33 @@
         <a href="#" class="btn btn-md">GET STARTED</a>
       </div>
     </div>
+    <script>
+      function getCookie(cname) {
+        let name = cname + "=";
+        let ca = document.cookie.split(";");
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == " ") {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+
+      function prepare() {
+        let cookie = getCookie("jwt");
+
+        if (cookie) {
+          document.getElementById("authBtn").innerHTML = "Logout";
+        } else {
+          document.getElementById("authBtn").innerHTML = "Sign in";
+          document.getElementById("authBtnHref").href = "/login";
+        }
+      }
+    </script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"

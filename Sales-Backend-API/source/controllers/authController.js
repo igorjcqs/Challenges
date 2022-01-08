@@ -27,6 +27,10 @@ const signupValidationSchema = Joi.object({
   password: Joi.string().required().min(8).max(255),
 });
 
+const handleErrors = (err) => {
+  console.log(err.message);
+};
+
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
   return jwt.sign({ id }, "Martins Websites", {
@@ -35,6 +39,7 @@ const createToken = (id) => {
 };
 
 module.exports.signupPost = async (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
   const { error } = signupValidationSchema.validate(req.body);
   if (error) {
     const errorMessage = error.details[0].message
@@ -51,17 +56,17 @@ module.exports.signupPost = async (req, res) => {
     return res.status(400).json({ error: "That email is already registered." });
 
   const newUser = new User({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    password: req.body.password,
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    password: password,
   });
 
   try {
-    const savedUser = await newUser.save();
-    const token = createToken(savedUser._id);
+    const user = await newUser.save();
+    const token = createToken(JSON.stringify(user._id));
     res.cookie("jwt", token, { HttpOnly: true, maxAge: maxAge * 1000 });
-    res.status(201).json({ user: savedUser._id });
+    res.status(201).json({ user: JSON.stringify(user._id) });
   } catch (err) {
     res.status(400).json({ error });
   }
@@ -71,6 +76,20 @@ module.exports.loginGet = (req, res) => {
   res.render("login");
 };
 
-module.exports.loginPost = (req, res) => {
-  res.send("Login a user");
+module.exports.loginPost = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.login(email, password);
+    const token = createToken(JSON.stringify(user._id));
+    res.cookie("jwt", token, { HttpOnly: true, maxAge: maxAge * 1000 });
+    res.status(200).json({ user: user._id });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports.logoutGet = (req, res) => {
+  res.cookie("jwt", "", { maxAge: 1 });
+  res.redirect("/");
 };
