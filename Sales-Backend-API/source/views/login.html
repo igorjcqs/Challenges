@@ -67,7 +67,6 @@
             headers: { "Content-Type": "application/json" },
           });
           const data = await res.json();
-          console.log(data);
           if (data.error) {
             document.getElementById("errorMessageDiv").style.display = "block";
             document.getElementById("errorMessageText").textContent =

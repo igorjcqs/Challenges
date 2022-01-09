@@ -82,7 +82,13 @@
             <li class="nav-item">
               <a href="/dashboard/createproduct" class="nav-link px-2">
                 <i class="material-icons icon"> dashboard </i>
-                <span class="text">Create product</span>
+                <span class="text">Create Product</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/dashboard/editproduct" class="nav-link px-2">
+                <i class="material-icons icon"> edit </i>
+                <span class="text">Edit Product</span>
               </a>
             </li>
           </ul>
@@ -124,11 +130,9 @@
                     </p>
                   </div>
                   <div class="social-links d-flex justify-content-center">
-                    <a href="/deleteaccount">
-                      <button class="btn delAccount">
-                        Delete your account
-                      </button>
-                    </a>
+                    <button class="btn delAccount" id="deleteAccountButton">
+                      Delete your account
+                    </button>
                   </div>
                 </div>
               </div>
@@ -137,6 +141,21 @@
         </main>
       </div>
     </div>
+    <script>
+      document
+        .getElementById("deleteAccountButton")
+        .addEventListener("click", myFunction);
+
+      async function myFunction() {
+        var res = await fetch("/deleteaccount", {
+          method: "DELETE",
+        });
+        const data = await res.json();
+        if (data.message == "User deleted.") {
+          location.assign("/");
+        }
+      }
+    </script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="

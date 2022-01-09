@@ -82,7 +82,13 @@
             <li class="nav-item active">
               <a class="nav-link px-2 active">
                 <i class="material-icons icon"> dashboard </i>
-                <span class="text">Create product</span>
+                <span class="text">Create Product</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/dashboard/editproduct" class="nav-link px-2">
+                <i class="material-icons icon"> edit </i>
+                <span class="text">Edit Product</span>
               </a>
             </li>
           </ul>
@@ -90,14 +96,103 @@
       </div>
       <div class="content">
         <main>
-          <div class="container text-center">
-            <h1 class="mt-5">Product</h1>
+          <div class="container mt-5">
+            <h1>Create a product</h1>
+            <div class="col mt-2">
+              <div class="errortext text-center" id="errorMessageDiv">
+                <p class="errorMessage mb-2" id="errorMessageText">a</p>
               </div>
+              <form>
+                <div class="form-group mb-3">
+                  <label for="productName">Name</label>
+                  <input type="text" name="productName" class="form-control" />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="productPrice">Price</label>
+                  <input type="text" name="productPrice" class="form-control" />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="productSize">Size</label>
+                  <input type="text" name="productSize" class="form-control" />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="productColor">Color</label>
+                  <input type="text" name="productColor" class="form-control" />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="productMaterial">Material</label>
+                  <input
+                    type="text"
+                    name="productMaterial"
+                    class="form-control"
+                  />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="productSection">Section</label>
+                  <input
+                    type="text"
+                    name="productSection"
+                    class="form-control"
+                  />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="image">Product Image</label>
+                  <input type="file" name="image" class="form-control-file" />
+                </div>
+                <div class="button text-center">
+                  <button class="btn btn-class">Create</button>
+                </div>
+              </form>
             </div>
           </div>
         </main>
       </div>
     </div>
+    <script>
+      const form = document.querySelector("form");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const productName = form.productName.value;
+        const productPrice = form.productPrice.value;
+        const productSize = form.productSize.value;
+        const productColor = form.productColor.value;
+        const productMaterial = form.productMaterial.value;
+        const productSection = form.productSection.value;
+
+        try {
+          const res = await fetch("/dashboard/createproduct", {
+            method: "POST",
+            body: JSON.stringify({
+              productName,
+              productPrice,
+              productSize,
+              productColor,
+              productMaterial,
+              productSection,
+            }),
+            headers: { "Content-Type": "application/json" },
+          });
+          const data = await res.json();
+          if (data.error) {
+            document.getElementById("errorMessageDiv").style.display = "block";
+            document.getElementById("errorMessageText").textContent =
+              data.error;
+          } else if (data.message == "Product created") {
+            form.reset();
+            document.getElementById("errorMessageDiv").style.display = "block";
+            document.getElementById("errorMessageText").style.color = "#33cc33";
+            document.getElementById("errorMessageText").textContent =
+              data.message;
+
+            setTimeout(() => {
+              document.getElementById("errorMessageText").textContent = "";
+            }, 3000);
+          }
+        } catch (error) {}
+      });
+    </script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="

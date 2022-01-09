@@ -95,7 +95,19 @@
 
         if (cookie) {
           document.getElementById("authBtn").innerHTML = "Logout";
-          document.getElementById("authBtnHref").href = "/logout";
+          document
+            .getElementById("authBtn")
+            .addEventListener("click", myFunction);
+
+          async function myFunction() {
+            var res = await fetch("/logout", {
+              method: "POST",
+            });
+            const data = await res.json();
+            if (data.message == "User logged out.") {
+              location.assign("/");
+            }
+          }
         } else {
           document.getElementById("authBtn").innerHTML = "Sign in";
           document.getElementById("authBtnHref").href = "/login";

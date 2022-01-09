@@ -1,13 +1,19 @@
-const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-const Joi = require("joi");
+const joi = require("joi");
 
-module.exports.signupGet = (req, res) => {
+const User = require("../models/User");
+
+module.exports.signupView = (req, res) => {
   res.render("signup");
 };
 
-const signupValidationSchema = Joi.object({
-  firstName: Joi.string()
+module.exports.loginView = (req, res) => {
+  res.render("login");
+};
+
+const signupValidationSchema = joi.object({
+  firstName: joi
+    .string()
     .required()
     .min(2)
     .max(255)
@@ -15,7 +21,8 @@ const signupValidationSchema = Joi.object({
     .messages({
       "string.pattern.base": "Your first name cannot contain numbers.",
     }),
-  lastName: Joi.string()
+  lastName: joi
+    .string()
     .required()
     .min(2)
     .max(255)
@@ -23,13 +30,9 @@ const signupValidationSchema = Joi.object({
     .messages({
       "string.pattern.base": "Your last name cannot contain numbers.",
     }),
-  email: Joi.string().required().email().max(255),
-  password: Joi.string().required().min(8).max(255),
+  email: joi.string().required().email().max(255),
+  password: joi.string().required().min(8).max(255),
 });
-
-const handleErrors = (err) => {
-  console.log(err.message);
-};
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
@@ -38,7 +41,7 @@ const createToken = (id) => {
   });
 };
 
-module.exports.signupPost = async (req, res) => {
+module.exports.signup = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   const { error } = signupValidationSchema.validate(req.body);
   if (error) {
@@ -72,11 +75,7 @@ module.exports.signupPost = async (req, res) => {
   }
 };
 
-module.exports.loginGet = (req, res) => {
-  res.render("login");
-};
-
-module.exports.loginPost = async (req, res) => {
+module.exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -89,13 +88,12 @@ module.exports.loginPost = async (req, res) => {
   }
 };
 
-module.exports.logoutGet = (req, res) => {
+module.exports.logout = (req, res) => {
   res.cookie("jwt", "", { maxAge: 1 });
-  res.redirect("/");
   res.status(200).json({ message: "User logged out." });
 };
 
-module.exports.deleteAccountGet = (req, res) => {
+module.exports.deleteAccount = (req, res) => {
   const token = req.cookies.jwt;
 
   if (token) {
@@ -103,11 +101,9 @@ module.exports.deleteAccountGet = (req, res) => {
       if (err) {
         res.redirect("/login");
       } else {
-        const user = await User.deleteOne({ _id: JSON.parse(decodedToken.id) });
-
+        await User.deleteOne({ _id: JSON.parse(decodedToken.id) });
         res.cookie("jwt", "", { maxAge: 1 });
-        res.redirect("/");
-        res.status(200).json({ message: "Account deleted!" });
+        res.status(200).json({ message: "User deleted." });
       }
     });
   } else {
