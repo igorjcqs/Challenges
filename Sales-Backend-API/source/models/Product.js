@@ -5,6 +5,10 @@ const productSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
   price: {
     type: String,
     required: true,
@@ -24,6 +28,10 @@ const productSchema = mongoose.Schema({
   section: {
     type: String,
     required: true,
+  },
+  sales: {
+    type: Number,
+    default: 0,
   },
   image: {
     type: String,

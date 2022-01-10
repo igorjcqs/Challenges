@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y="
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css"
+      integrity="sha256-x8PYmLKD83R9T/sYmJn1j3is/chhJdySyhet/JuHnfY="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/styles/dash.css" />
+  </head>
+
+  <body>
+<main>
+          <div id="mainContainer" class="container mt-5">
+            <h1>Edit a product</h1>
+            <h2 id="productId">{{productId}}</h2>
+            <div class="col mt-2">
+              <div class="errortext text-center" id="errorMessageDiv">
+                <p class="errorMessage mb-2" id="errorMessageText">a</p>
+              </div>
+              <form
+                method="post"
+                enctype="multipart/form-data"
+              >
+                <div class="form-group mb-3">
+                  <label for="productName">Name</label>
+                  <input type="text" name="productName" id="productName" placeholder="{{productName}}" class="form-control" />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="productName">Description</label>
+                  <input type="text" name="productDesc" id="productDesc" placeholder="{{productDesc}}" class="form-control" />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="productPrice">Price</label>
+                  <input type="text" name="productPrice" id="productPrice" placeholder="{{productPrice}}" class="form-control" />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="productSize">Size</label>
+                  <input type="text" name="productSize" id="productSize" placeholder="{{productSize}}" class="form-control" />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="productColor">Color</label>
+                  <input type="text" name="productColor" id="productColor" placeholder="{{productColor}}" class="form-control" />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="productMaterial">Material</label>
+                  <input
+                    type="text"
+                    name="productMaterial"
+                    id="productMaterial"
+                    placeholder="{{productMaterial}}"
+                    class="form-control"
+                  />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="productSection">Section</label>
+                  <input
+                    type="text"
+                    name="productSection"
+                    id="productSection"
+                    placeholder="{{productSection}}"
+                    class="form-control"
+                  />
+                </div>
+                <div class="button text-center">
+                  <input type="submit" class="btn btn-class"></input>
+                </div>
+              </form>
+            </div>
+          </div>
+        </main>
+    <script>
+      const form = document.querySelector("form");
+      const productId = document.getElementById('productId').textContent;
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        var productName = form.productName.value;
+        var productDesc = form.productDesc.value;
+        var productPrice = form.productPrice.value;
+        var productSize = form.productSize.value;
+        var productColor = form.productColor.value;
+        var productMaterial = form.productMaterial.value;
+        var productSection = form.productSection.value;
+
+        if(form.productName.value.length == 0) {
+          productName = document.getElementById('productName').getAttribute("placeholder");
+        }
+        if(form.productDesc.value.length == 0) {
+          productDesc = document.getElementById('productDesc').getAttribute("placeholder");
+        }
+        if(form.productPrice.value.length == 0) {
+          productPrice = document.getElementById('productPrice').getAttribute("placeholder");
+        }
+        if(form.productSize.value.length == 0) {
+          productSize = document.getElementById('productSize').getAttribute("placeholder");
+        }
+        if(form.productColor.value.length == 0) {
+          productColor = document.getElementById('productColor').getAttribute("placeholder");
+        }
+        if(form.productMaterial.value.length == 0) {
+          productMaterial = document.getElementById('productMaterial').getAttribute("placeholder");
+        }
+        if(form.productSection.value.length == 0) {
+          productSection = document.getElementById('productSection').getAttribute("placeholder");
+        }
+
+        try {
+          const res = await fetch("/product/edit/" + productId, {
+            method: "PUT",
+            body: JSON.stringify({
+              productName,
+              productDesc,
+              productPrice,
+              productSize,
+              productColor,
+              productMaterial,
+              productSection,
+            }),
+            headers: { "Content-Type": "application/json" },
+          });
+        } catch (error) {}
+      });
+    </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"
+      integrity="sha256-OUFW7hFO0/r5aEGTQOz9F/aXQOt+TwqI1Z4fbVvww04="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"
+      integrity="sha256-qE/6vdSYzQu9lgosKxhFplETvWvqAAlmAuR+yPh/0SI="
+      crossorigin="anonymous"
+    ></script>
+    <script src="./js/script.js"></script>
+  </body>
+</html>

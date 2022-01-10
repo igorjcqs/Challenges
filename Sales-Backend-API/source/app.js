@@ -5,8 +5,9 @@ const cookieParser = require("cookie-parser");
 
 const authRoutes = require("./routes/auth");
 const dashboardRoutes = require("./routes/dashboard");
+const productRoutes = require("./routes/product");
 
-const { authMiddleware, checkUser } = require("./middleware/authMiddleware");
+const { checkUser } = require("./middleware/authMiddleware");
 
 const app = express();
 require("dotenv/config");
@@ -27,5 +28,6 @@ app.get("/", (req, res) => res.render("home"));
 
 app.use(authRoutes);
 app.use("/dashboard/", dashboardRoutes);
+app.use("/product/", productRoutes);
 
 app.listen(process.env.port, () => console.log("Server up successfully."));

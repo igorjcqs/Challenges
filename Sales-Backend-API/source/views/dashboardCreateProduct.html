@@ -102,10 +102,17 @@
               <div class="errortext text-center" id="errorMessageDiv">
                 <p class="errorMessage mb-2" id="errorMessageText">a</p>
               </div>
-              <form>
+              <form
+                method="post"
+                enctype="multipart/form-data"
+              >
                 <div class="form-group mb-3">
                   <label for="productName">Name</label>
                   <input type="text" name="productName" class="form-control" />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="productName">Description</label>
+                  <input type="text" name="productDesc" class="form-control" />
                 </div>
                 <div class="form-group mb-3">
                   <label for="productPrice">Price</label>
@@ -135,12 +142,8 @@
                     class="form-control"
                   />
                 </div>
-                <div class="form-group mb-3">
-                  <label for="image">Product Image</label>
-                  <input type="file" name="image" class="form-control-file" />
-                </div>
                 <div class="button text-center">
-                  <button class="btn btn-class">Create</button>
+                  <input type="submit" class="btn btn-class"></input>
                 </div>
               </form>
             </div>
@@ -155,6 +158,7 @@
         e.preventDefault();
 
         const productName = form.productName.value;
+        const productDesc = form.productDesc.value;
         const productPrice = form.productPrice.value;
         const productSize = form.productSize.value;
         const productColor = form.productColor.value;
@@ -166,6 +170,7 @@
             method: "POST",
             body: JSON.stringify({
               productName,
+              productDesc,
               productPrice,
               productSize,
               productColor,

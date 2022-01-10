@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-const ObjectId = require("mongodb").ObjectId;
 
 const authMiddleware = (req, res, next) => {
   const token = req.cookies.jwt;

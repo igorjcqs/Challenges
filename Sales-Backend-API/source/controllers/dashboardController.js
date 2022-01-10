@@ -4,6 +4,16 @@ const joi = require("joi");
 const User = require("../models/User");
 const Product = require("../models/Product");
 
+const productValidationSchema = joi.object({
+  productName: joi.string().required().min(3),
+  productDesc: joi.string().required(),
+  productPrice: joi.string().required(),
+  productSize: joi.string().required().min(2),
+  productColor: joi.string().required().min(3),
+  productMaterial: joi.string().required().min(3),
+  productSection: joi.string().required().min(3),
+});
+
 module.exports.dashboardUserProfileView = (req, res) => {
   res.render("dashboardUser");
 };
@@ -16,19 +26,28 @@ module.exports.dashboardEditProductView = (req, res) => {
   res.render("dashboardEditProduct");
 };
 
-const productValidationSchema = joi.object({
-  productName: joi.string().required().min(3),
-  productPrice: joi.string().required(),
-  productSize: joi.string().required().min(2),
-  productColor: joi.string().required().min(3),
-  productMaterial: joi.string().required().min(3),
-  productSection: joi.string().required().min(3),
-});
+module.exports.dashboardShowAllProduct = (req, res) => {
+  Product.find({}, function (err, products) {
+    if (!err) {
+      Product.countDocuments((err, count) => {
+        if (!err) {
+          return res.status(200).json({ count: count, products: products });
+        } else {
+          return res.status(400).json({ error: err.message });
+        }
+      });
+    } else {
+      return res.status(400).json({ error: err.message });
+    }
+  });
+};
 
 module.exports.dashboardCreateProduct = async (req, res) => {
+  console.log(req.file);
   const token = req.cookies.jwt;
   const {
     productName,
+    productDesc,
     productPrice,
     productSize,
     productColor,
@@ -41,6 +60,7 @@ module.exports.dashboardCreateProduct = async (req, res) => {
     const errorMessage = error.details[0].message
       .replace(/[^\w\s]/gi, "")
       .replace("productName", "Name")
+      .replace("productDesc", "Description")
       .replace("productPrice", "Price")
       .replace("productSize", "Size")
       .replace("productColor", "Color")
@@ -65,12 +85,13 @@ module.exports.dashboardCreateProduct = async (req, res) => {
 
         const newProduct = new Product({
           name: productName,
+          description: productDesc,
           price: productPrice,
           size: productSize,
           color: productColor,
           material: productMaterial,
           section: productSection,
-          createdBy: user._id,
+          createdBy: user.firstName + " " + user.lastName,
         });
 
         try {
