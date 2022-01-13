@@ -23,6 +23,10 @@ const userSchema = mongoose.Schema({
     required: true,
     minLength: 8,
   },
+  favorites: {
+    type: [String],
+    lowercase: true,
+  },
   joinedAt: {
     type: Date,
     default: Date.now,

@@ -8,4 +8,7 @@ router.post("/login", authController.login);
 router.post("/logout", authController.logout);
 router.delete("/deleteaccount", authController.deleteAccount);
 
+router.post("/updatefavorites/:productId", authController.addFavorite);
+router.delete("/updatefavorites/:productId", authController.removeFavorite);
+
 module.exports = router;

@@ -116,7 +116,7 @@
                 </div>
                 <div class="form-group mb-3">
                   <label for="productPrice">Price</label>
-                  <input type="text" name="productPrice" class="form-control" />
+                  <input type="number" name="productPrice" class="form-control" />
                 </div>
                 <div class="form-group mb-3">
                   <label for="productSize">Size</label>
@@ -142,6 +142,14 @@
                     class="form-control"
                   />
                 </div>
+                <div class="form-group mb-3">
+                  <label for="productStock">Stock</label>
+                  <input
+                    type="number"
+                    name="productStock"
+                    class="form-control"
+                  />
+                </div>
                 <div class="button text-center">
                   <input type="submit" class="btn btn-class"></input>
                 </div>
@@ -164,6 +172,7 @@
         const productColor = form.productColor.value;
         const productMaterial = form.productMaterial.value;
         const productSection = form.productSection.value;
+        const productStock = form.productStock.value;
 
         try {
           const res = await fetch("/dashboard/createproduct", {
@@ -176,6 +185,7 @@
               productColor,
               productMaterial,
               productSection,
+              productStock,
             }),
             headers: { "Content-Type": "application/json" },
           });

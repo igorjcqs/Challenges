@@ -14,6 +14,10 @@
   display: none;
 }
 
+.errortext1 {
+  color: red;
+}
+
 .form-control {
   display: block;
   width: 100%;

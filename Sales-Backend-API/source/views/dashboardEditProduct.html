@@ -118,6 +118,7 @@
                   <th>Color</th>
                   <th>Material</th>
                   <th>Section</th>
+                  <th>Stock</th>
                   <th>Creator</th>
                   <th>Image</th>
                   <th>Edit</th>
@@ -161,10 +162,11 @@
               var colorCell = newColunm.insertCell(5);
               var materialCell = newColunm.insertCell(6);
               var sectionCell = newColunm.insertCell(7);
-              var creatorCell = newColunm.insertCell(8);
-              var imageCell = newColunm.insertCell(9);
-              var editCell = newColunm.insertCell(10);
-              var removeCell = newColunm.insertCell(11);
+              var stockCell = newColunm.insertCell(8);
+              var creatorCell = newColunm.insertCell(9);
+              var imageCell = newColunm.insertCell(10);
+              var editCell = newColunm.insertCell(11);
+              var removeCell = newColunm.insertCell(12);
               idCell.innerHTML = `<div id="productIdField">${row._id}</div>`;
               nameCell.innerHTML = `<a href="/product/${
                 row._id
@@ -175,6 +177,7 @@
               sizeCell.innerHTML = row.size;
               materialCell.innerHTML = firstLetterToUpperCase(row.material);
               sectionCell.innerHTML = firstLetterToUpperCase(row.section);
+              stockCell.innerHTML = row.stock;
               creatorCell.innerHTML = titleCase(row.createdBy);
               imageCell.innerHTML = `<div class="text-center"><a href="/product/images/${row._id}" style="cursor: pointer;"><i class="material-icons icon image"> image </i></a></div>`;
               editCell.innerHTML = `<div class="text-center"><a href="/product/edit/${row._id}" style="cursor: pointer;"><i class="material-icons icon edit"> edit </i></a></div>`;

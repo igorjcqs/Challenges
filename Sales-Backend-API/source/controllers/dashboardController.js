@@ -7,11 +7,12 @@ const Product = require("../models/Product");
 const productValidationSchema = joi.object({
   productName: joi.string().required().min(3),
   productDesc: joi.string().required(),
-  productPrice: joi.string().required(),
+  productPrice: joi.number().required(),
   productSize: joi.string().required().min(2),
   productColor: joi.string().required().min(3),
   productMaterial: joi.string().required().min(3),
   productSection: joi.string().required().min(3),
+  productStock: joi.number().required(),
 });
 
 module.exports.dashboardUserProfileView = (req, res) => {
@@ -43,7 +44,6 @@ module.exports.dashboardShowAllProduct = (req, res) => {
 };
 
 module.exports.dashboardCreateProduct = async (req, res) => {
-  console.log(req.file);
   const token = req.cookies.jwt;
   const {
     productName,
@@ -53,6 +53,7 @@ module.exports.dashboardCreateProduct = async (req, res) => {
     productColor,
     productMaterial,
     productSection,
+    productStock,
   } = req.body;
 
   const { error } = productValidationSchema.validate(req.body);
@@ -66,7 +67,7 @@ module.exports.dashboardCreateProduct = async (req, res) => {
       .replace("productColor", "Color")
       .replace("productMaterial", "Material")
       .replace("productSection", "Section")
-      .replace("productPrice", "Price");
+      .replace("productStock", "Stock");
     return res.status(400).json({ error: errorMessage });
   }
 
@@ -91,6 +92,7 @@ module.exports.dashboardCreateProduct = async (req, res) => {
           color: productColor,
           material: productMaterial,
           section: productSection,
+          stock: productStock,
           createdBy: user.firstName + " " + user.lastName,
         });
 

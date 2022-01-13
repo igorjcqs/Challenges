@@ -29,6 +29,11 @@ const productSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  stock: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
   sales: {
     type: Number,
     default: 0,

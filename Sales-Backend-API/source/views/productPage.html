@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Product Card/Page</title>
+    <title>Product Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/styles/product.css" />
     <link
@@ -13,7 +13,7 @@
       crossorigin="anonymous"
     />
   </head>
-  <body>
+  <body onload="prepare()">
     <div class="card-wrapper">
       <div class="card">
         <!-- card left -->
@@ -66,22 +66,114 @@
               <li>Size: <span>{{productSize}}</span></li>
               <li>Color: <span>{{productColor}}</span></li>
               <li>Material: <span>{{productMaterial}}</span></li>
+              <li>In stock: <span>{{productStock}}</span></li>
             </ul>
           </div>
 
           <div class="purchase-info">
             <input type="number" min="0" value="1" />
-            <button type="button" class="btn">
-              Add to Cart <i class="fas fa-shopping-cart"></i>
+            <button type="button" class="btn" id="addToCartButton">
+              {{cartLabel}} <i class="fas fa-shopping-cart"></i>
             </button>
-            <button type="button" class="btn">
-              Add to favorites <i class="fas fa-star"></i>
+            <button type="button" class="btn" id="favButton">
+              {{favoritesLabel}} <i class="fas fa-star"></i>
             </button>
           </div>
         </div>
       </div>
     </div>
+    <script>
+      function prepare() {
+        const addToCartButton = document.getElementById("addToCartButton");
+        const favButton = document.getElementById("favButton");
+        const token = getCookie("jwt");
 
+        if (token) {
+          favButton.addEventListener("click", (event) => {
+            if (favButton.innerHTML.match("Remove from favorites")) {
+              removeFromFavorites();
+              favButton.innerHTML = `Add to favorites <i class="fas fa-star"></i>`;
+            } else if (favButton.innerHTML.match("Add to favorites")) {
+              addToFavorites();
+              favButton.innerHTML = `Remove from favorites <i class="fas fa-star"></i>`;
+            }
+          });
+
+          addToCartButton.addEventListener("click", (event) => {
+            if (addToCartButton.innerHTML.match("Add to cart")) {
+              addToCart();
+              addToCartButton.innerHTML = `Show cart <i class="fas fa-shopping-cart"></i>`;
+            } else if (addToCartButton.innerHTML.match("Show cart")) {
+              location.assign("/cart");
+            }
+          });
+        } else {
+          favButton.addEventListener("click", (event) => {
+            location.assign("/login");
+          });
+          addToCartButton.addEventListener("click", (event) => {
+            location.assign("/login");
+          });
+        }
+      }
+    </script>
+    <script>
+      const favButton = document.getElementById("favButton");
+
+      async function addToFavorites() {
+        const productId = document.URL.split("/")[4];
+        await fetch("/updatefavorites/" + productId, {
+          method: "POST",
+        });
+      }
+
+      async function removeFromFavorites() {
+        const productId = document.URL.split("/")[4];
+        await fetch("/updatefavorites/" + productId, {
+          method: "DELETE",
+        });
+      }
+
+      async function addToCart() {
+        const productId = document.URL.split("/")[4];
+        const currentCart = getCookie("cart");
+
+        if (!currentCart) {
+          createCookie("cart", productId, 30);
+        } else {
+          await createCookie("cart", currentCart + ", " + productId, 30);
+          console.log(currentCart.split(","));
+        }
+      }
+    </script>
+    <script>
+      function getCookie(cname) {
+        let name = cname + "=";
+        let ca = document.cookie.split(";");
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == " ") {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+
+      function createCookie(name, value, days) {
+        var expires;
+        if (days) {
+          var date = new Date();
+          date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+          expires = "; expires=" + date.toGMTString();
+        } else {
+          expires = "";
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+      }
+    </script>
     <script>
       const imgs = document.querySelectorAll(".img-select a");
       const imgBtns = [...imgs];
