@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.parent {
+  display: grid;
+  grid-template-columns: repeat(3, 0.5fr);
+  grid-template-rows: auto;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.card {
+  border: solid 2px black;
+  margin-left: 10%;
+}
+
+.search-box {
+  position: relative;
+  left: 45%;
+}

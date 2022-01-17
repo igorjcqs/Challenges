@@ -11,7 +11,6 @@
       integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y="
       crossorigin="anonymous"
     />
-
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css"
@@ -20,9 +19,8 @@
     />
     <link rel="stylesheet" href="/styles/dash.css" />
   </head>
-
   <body>
-<main>
+       <main>
           <div id="mainContainer" class="container mt-5">
             <h1>Edit a product</h1>
             <h2 id="productId">{{productId}}</h2>
@@ -44,7 +42,7 @@
                 </div>
                 <div class="form-group mb-3">
                   <label for="productPrice">Price</label>
-                  <input type="text" name="productPrice" id="productPrice" placeholder="{{productPrice}}" class="form-control" />
+                  <input type="number" name="productPrice" id="productPrice" placeholder="{{productPrice}}" class="form-control" />
                 </div>
                 <div class="form-group mb-3">
                   <label for="productSize">Size</label>
@@ -77,7 +75,7 @@
                 <div class="form-group mb-3">
                   <label for="productStock">Stock</label>
                   <input
-                    type="text"
+                    type="number"
                     name="productStock"
                     id="productStock"
                     placeholder="{{productStock}}"
@@ -153,7 +151,13 @@
             }),
             headers: { "Content-Type": "application/json" },
           });
-        } catch (error) {}
+
+          if(res.status == 200) {
+            location.assign('/dashboard/editproduct')
+          }
+        } catch (err) {
+          console.log(err);
+        }
       });
     </script>
     <script
@@ -171,6 +175,5 @@
       integrity="sha256-qE/6vdSYzQu9lgosKxhFplETvWvqAAlmAuR+yPh/0SI="
       crossorigin="anonymous"
     ></script>
-    <script src="./js/script.js"></script>
   </body>
 </html>

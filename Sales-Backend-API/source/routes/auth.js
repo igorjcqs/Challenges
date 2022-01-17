@@ -1,14 +1,21 @@
 const router = require("express").Router();
-const authController = require("../controllers/authController");
 
-router.get("/signup", authController.signupView);
-router.post("/signup", authController.signup);
-router.get("/login", authController.loginView);
-router.post("/login", authController.login);
-router.post("/logout", authController.logout);
-router.delete("/deleteaccount", authController.deleteAccount);
+const viewController = require("../controllers/auth/views");
+const methodController = require("../controllers/auth/methods");
 
-router.post("/updatefavorites/:productId", authController.addFavorite);
-router.delete("/updatefavorites/:productId", authController.removeFavorite);
+/* -------------------------- Views -------------------------- */
+
+router.get("/signup", viewController.signup);
+router.get("/login", viewController.login);
+
+/* ----------------------------------------------------------- */
+
+/* --------------------------- API --------------------------- */
+
+router.post("/signup", methodController.signup);
+router.post("/login", methodController.login);
+router.post("/logout", methodController.logout);
+
+/* ----------------------------------------------------------- */
 
 module.exports = router;

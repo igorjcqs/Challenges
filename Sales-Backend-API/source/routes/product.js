@@ -1,14 +1,25 @@
 const router = require("express").Router();
 
-const productController = require("../controllers/productController");
+const viewController = require("../controllers/product/views");
+const methodController = require("../controllers/product/methods");
 
-router.get("/:productId", productController.showProduct);
-router.get("/delete/:productId", productController.deleteProduct);
-router.get("/edit/:productId", productController.editProductView);
-router.get("/images/:productId", productController.showProductImage);
+/* -------------------------- Views -------------------------- */
 
-router.post("/images/:productId", productController.uploadImage);
+router.get("/find/:productId", viewController.product);
+router.get("/edit/:productId", viewController.editProduct);
+router.get("/images/:productId", viewController.productImage);
+router.get("/create/:productId", viewController.productImage);
 
-router.put("/edit/:productId", productController.editProduct);
+/* ----------------------------------------------------------- */
+
+/* --------------------------- API --------------------------- */
+
+router.get("/search", methodController.search);
+router.get("/all", methodController.allProducts);
+router.put("/edit/:productId", methodController.edit);
+router.post("/images/:productId", methodController.upload);
+router.delete("/delete/:productId", methodController.delete);
+
+/* ----------------------------------------------------------- */
 
 module.exports = router;

@@ -27,6 +27,9 @@ const userSchema = mongoose.Schema({
     type: [String],
     lowercase: true,
   },
+  avatar: {
+    type: String,
+  },
   joinedAt: {
     type: Date,
     default: Date.now,

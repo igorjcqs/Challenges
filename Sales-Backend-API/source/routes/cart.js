@@ -1,6 +1,15 @@
 const router = require("express").Router();
-const cartController = require("../controllers/cartController");
 
-router.get("/", cartController.showCart);
+const viewController = require("../controllers/cart/views");
+
+/* -------------------------- Views -------------------------- */
+
+router.get("/", viewController.showCart);
+
+/* ----------------------------------------------------------- */
+
+/* --------------------------- API --------------------------- */
+
+/* ----------------------------------------------------------- */
 
 module.exports = router;
